@@ -4,11 +4,19 @@ from heapq import heappop, heappush
 
 
 def Dijkstra(Grafo, nodoOrigen, nodoDestino):
+    """
+    Se comprueba que el nodo exista en el gráfo y que el nodo no sea 
+    si mismo
+    """
     if not nodoOrigen in Grafo.keys() or not nodoDestino in Grafo.keys():
         return "El nodo no existe en el grafo"
     if nodoOrigen is nodoDestino:
         return "El nodo destino es el nodo de origen"
-
+    
+    """
+    Se crea un vector con las distancias desde el nodo de origen y una 
+    cola de prioridad con nodos y distancias
+    """
     distancias = {nodo: math.inf for nodo in Grafo}
     distancias[nodoOrigen] = 0
     Queue = [(0, nodoOrigen)]
@@ -32,8 +40,20 @@ def Dijkstra(Grafo, nodoOrigen, nodoDestino):
                 heappush(Queue, (distanciaAux, nodoVecino))
 
     if distancias[nodoDestino] == math.inf:
+        """
+        Si la distancia al nodo destino es infinita significa que no se 
+        encontró un camino hacia dicho nodo. Puede ocurrir en grafos 
+        dirigidos donde un nodo sólo tiene nodos hacia otros pero no 
+        desde otros.
+        """
         return "No hay solución"
     else:
+        """
+        Se genera una lista de inclusión agarrando todos los nodos 
+        previos al nodo destino. Luego se retorna el valor de la lista de 
+        distancias en orden pero solo tomando en cuenta los nodos en la lista 
+        de inclusión.
+        """
         inclusion = []
         nodoActual = nodoDestino
         while nodoActual is not None:
@@ -53,6 +73,7 @@ vi = "A"
 vf = "D"
 
 """
+#Generación aleatoria de nodos
 nodes = ["A", "H", "D", "B", "C"]
 n = 3
 g_ran = dict()
